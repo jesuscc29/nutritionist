@@ -1,6 +1,6 @@
 # Nutritionist
 
-<On development>
+= On development =
 
 Some nutrition app
 
