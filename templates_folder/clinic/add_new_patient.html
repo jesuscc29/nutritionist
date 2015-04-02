@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Pacientes{% endblock %}
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}theme/js/bootstrap-datepicker/css/datepicker.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/clinic/add_patient_style.css"/>
+{% endblock %}
+{% block content %}
+    {% load custom_tagsnfilters %}
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Nuevo Paciente
+                </header>
+                <div class="panel-body">
+                    <form action="." method="post" id="addPatientForm">
+                        {% csrf_token %}
+                        <div class="row text-center">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h4>Datos Personales</h4>
+                                    {% for field in patient_form %}
+                                        <div class="col-md-2 col-md-offset-2 control-label">
+                                            {{ field.label }}:
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if field.field.required %}
+                                                {{ field|add_class:"form-control m-bot15 required" }}
+                                            {% else %}
+                                                {{ field|add_class:"form-control m-bot15" }}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row text-center">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h4>Dirección</h4>
+                                    {% for address_field in address_form %}
+                                        <div class="col-md-2 col-md-offset-2 control-label">
+                                            {{ address_field.label }}:
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if address_field.field.required %}
+                                                {{ address_field|add_class:"form-control m-bot15 required" }}
+                                            {% else %}
+                                                {{ address_field|add_class:"form-control m-bot15" }}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row text-center">
+                            <a href="#" class="btn btn-success btn-lg" id="btnSavePatient">
+                                Guardar <i class="fa fa-save"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+    {% include "message_lightboxes/error.html" %}
+{% endblock %}
+{% block aditional_js %}
+    <script type="text/javascript"
+            src="{{ STATIC_URL }}theme/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="{{ STATIC_URL }}js/validate_fields.js"></script>
+    <script src="{{ STATIC_URL }}js/errors.js"></script>
+    <script>
+        $(function () {
+            $("input[name*='birthday']").datepicker(
+                    {
+                        format: 'yyyy-mm-dd',
+                        startDate: new Date(),
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+        });
+
+        $(document).on("ready", function () {
+            $("#btnSavePatient").click(function(e) {
+                if(validateRequiredFields($("#addPatientForm"))) {
+                    $("#addPatientForm").submit();
+                } else {
+                    showErrorMessage("ERROR", "REVISE LOS CAMPOS OBLIGATORIOS!");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

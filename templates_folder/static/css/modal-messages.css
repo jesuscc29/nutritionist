@@ -1,0 +1,43 @@
+.error {
+    background-color: #d9534f;
+    color: #333;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+}
+
+.error h4 {
+    color: #ffffff;
+}
+
+.error-btn {
+    background-color: #d9534f;
+    color: #ffffff;
+    border-color: #d9534f;
+}
+
+.success {
+    background-color: #5cb85c;
+    color: #333;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+}
+
+.success h4 {
+    color: #ffffff;
+}
+
+.success-btn {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+    color: #ffffff;
+}
+
+.success-btn:hover {
+    background-color: #007b00;
+    border-color: #007b00;
+}
+
+
+.shadow {
+    box-shadow: 5px;
+}

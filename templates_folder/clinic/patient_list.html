@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Pacientes{% endblock %}
+{% block additional_css %}
+    <!--dynamic table-->
+    <link href="{{ STATIC_URL }}theme/js/advanced-datatable/css/demo_page.css" rel="stylesheet"/>
+    <link href="{{ STATIC_URL }}theme/js/advanced-datatable/css/demo_table.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}theme/js/data-tables/DT_bootstrap.css"/>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10 col-sm-6 col-xs-2">
+                            Pacientes
+                        </div>
+                        <div class="col-md-2 col-sm-6 col-xs-2">
+                            <a href="{% url "add_new_patient" %}" class="btn btn-success">
+                                Nuevo Paciente <i class="fa fa-plus-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th>NOMBRE</th>
+                                    <th>FECHA DE NACIMIENTO</th>
+                                    <th>SEXO</th>
+                                    <th>TELEFONO</th>
+                                    <th>CORREO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for patient in object_list %}
+                                    <tr>
+                                        <td>{{ patient.name }} {{ patient.last_name }}</td>
+                                        <td>{{ patient.birthday }}</td>
+                                        <td>{{ patient.get_gender_display }}</td>
+                                        <td>{{ patient.phone_number }}</td>
+                                        <td>{{ patient.email }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+{% block aditional_js %}
+    <script type="text/javascript" language="javascript"
+            src="{{ STATIC_URL }}theme/js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/js/data-tables/DT_bootstrap.js"></script>
+
+    <script>
+        $(document).on("ready", function () {
+            $('#dynamic-table').dataTable({
+                "iDisplayLength": 25,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+                "aaSorting": [[0, "asc"]],
+                "oLanguage": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

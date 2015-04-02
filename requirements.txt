@@ -1,0 +1,11 @@
+suds
+xmltodict
+django==1.7.1
+mysql-python
+pillow
+simplejson
+pytz
+django-debug-toolbar
+python-dateutil
+pdfkit
+XlsxWriter
